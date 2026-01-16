@@ -1,82 +1,29 @@
 --!nocheck
 --!native
---!nolint
---[[
-	This is only one out of the many releases we have to offer, we will have more stuff soon, take a look!
-	This is the same gui that used in all of whiz's videos, one of the most powerful guis to ever exist on site-19!
 
-	To the people that think we left site-19 because there was no more fun left to have, 
-	you are wrong, we left site-19 in favor of the roblox remote code execution vulnerability...
-	
-	Site-19 currently is ran by the most croupt individuals, and will manipulate you just for their gain.
-	Sadly, I was fooled, my kindness was taken advantage of, resulting in the most critical vulnerabilities being gaven out in patched.
-	
-	Including the open all doors exploit that wrecked havoc in febuary of 2025
-	although we weren't the first ones to find it.
-	
-	We will not be naming the people that found the open all doors exploit first,
-	but we have the most up most respect for them.
-	
-	PS:
-	
-	Stellar/Trishdevs is a sad person.
-	
-	Also imaydanoz, just because you think you can aim good in a lego larp game doesn't make you some sort of superior higher hierarchy of a human, 
-	please stop being an asshole to other people, people like you in site-19 acted as a source of motivation.
-	
-	Another shoutout goes to rqzdz_devs, your efforts on trying to get our gui were cute
-	it is honestly quite funny how you tried to catfish whiz for the gui, but better luck next time!
-	
-	
-	
-	We'd also like to give thanks to the entire site-19 high command, 
-	you were our exact source of motivation, thank you for everything.
-	
-	------
-	Special Thanks:
-	Whiz - Content Creator, motivation.
-	
-	Vex - Contributor & Tester, came up with two ways to bypass the server anti-cheat, and also gave suggestions on what is next
-	And also was behind the server breaker script that happened not to long ago...
-	
-	The site-19 skiddies - You tried our best to mimic features you didn't have, it was cute, but better luck next time.
-	ThunderGemios10 - Being lazy and not patching becuase they aren't "game breaking".
-	
-	---
-	
-	This UI will not be updated or compensated for future patches.
-	Public complaint center: https://discord.gg/XKRbfaqdXz
-	
-	
-]]
-
--- Author: @WATDAHECKLOL32
--- Date: 7/22/25
--- Date of release: 1/15/2026
-
-if not hookmetamethod or not newcclosure or not getgc or not cloneref or not isfunctionhooked then
-	return error("unsupported", 2);
+if not hookmetamethod or not newcclosure or not getgc or not cloneref then
+	error("unsupported", 2);
+	return;
 end;
-
-
-if getgenv().Loaded then return; end;
-getgenv().Loaded = true;
-
-local service: {[string]: Instance} = setmetatable({}, {
-	__index = function(self: {[string]: Instance}, index: string): Instance
+local isfunctionhooked = isfunctionhooked or isnewcclosure or iscclosure;
+if not isfunctionhooked then error("unsupported", 2); return; end;
+if getgenv().SEX_LOADED then return end
+pcall(function() getgenv().SEX_LOADED = true end)
+if not game:IsLoaded() then game.Loaded:Wait() end
+local service = setmetatable({}, {
+	__index = function(self, index)
 		local ref = cloneref(game:GetService(index));
 		rawset(self, index, ref);
 		return ref;
 	end;
 });
-
 local run_service: RunService = service.RunService;
 local Players: Players = service.Players;
-
 local Player = Players.LocalPlayer :: Player;
 local CollectionService: CollectionService = service.CollectionService;
-
 local network = {};
+local wait = task.wait;
+local spawn = task.spawn;
 for _,v in getgc(false) do
 	if type(v) == "function" and islclosure(v) then
 		if debug.info(v, "n") == "FireServer" then
@@ -86,23 +33,21 @@ for _,v in getgc(false) do
 		end;
 	end;
 end;
-
 local Luna = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/luna", true))();
 local Window = Luna:CreateWindow({
 	Name = "Site 19 SEX HUB", 
-	Subtitle = "Power beyond your comprehension.", 
-	LogoID = 82795327169782,
+	Subtitle = nil, 
+	LogoID = nil,
 	LoadingEnabled = true, 
 	LoadingTitle = "Site-19 SEX HUB V2.0", 
-	LoadingSubtitle = "by Director WATDAHECKLOL32, Vex, whiz",
+	LoadingSubtitle = "by Director WATDAHECKLOL32, Special Agent Vex, Agent whiz",
 	ConfigSettings = {
-		RootFolder = nil, 
-		ConfigFolder = "S19 Hub" 
+		RootFolder = nil,
+		ConfigFolder = "S19 Hub"
 	},
 	KeySystem = false,
 });
-
--- when my encryption sys so good the client can decrypt it, using something like XOR would be more secure than this piece of shit lmao.
+-- when my encryption sys so good the client can decode it
 local decode_args;  decode_args = @native function(encoded: string, key: {number}, extra: number): string
 	local decoded: string = "";
 	local cut_off: number = #encoded;
@@ -126,7 +71,6 @@ local decode_args;  decode_args = @native function(encoded: string, key: {number
 	end;
 	return decoded;
 end;
-
 local helpful_tab =  Window:CreateTab({
 	Name = "Main";
 	Icon = "report";
@@ -139,7 +83,6 @@ local weapon_tab = Window:CreateTab({
 	ImageSource = "Material",
 	ShowTitle = true
 });
-
 local moderation_tab = Window:CreateTab({
 	Name = "Moderation";
 	Icon = "security";
@@ -152,7 +95,6 @@ local ddos_tab = Window:CreateTab({
 	ImageSource = "Material";
 	ShowTitle = true;
 });
-
 local teleport_tab = Window:CreateTab({
 	Name = "Teleport";
 	Icon = "public";
@@ -166,7 +108,6 @@ local door_tab = Window:CreateTab({
 	ShowTitle = true;	
 });
 local door_section = door_tab:CreateSection("Main");
-
 door_section:CreateButton({
 	Name = "Open keycard door nearest to you";
 	Description = "Doesnt require a keycard at all";
@@ -178,24 +119,29 @@ door_section:CreateButton({
 		return;
 	end,
 });
-
 door_section:CreateButton({
 	Name = "Open all keycard doors";
 	Description = "Must have keycard out";
 	Callback = @native function(_: unknown): ()
-		return Luna:Notification({
-			Title = "Feature disabled";
-			Icon  = "check_box";
-			ImageSource = "Material";
-			Content = "This feature was redacted upon release, you can replicate it by looking how the tesla gate exploit works!"
-		});
+		if not Player.Character or not Player.Character:FindFirstChildWhichIsA("Tool") then
+			return;
+		end;
+		local Card = Player.Character:FindFirstChildWhichIsA("Tool");
+		for _, v in CollectionService:GetTagged("Door") do
+			for _, part in v:GetDescendants() do
+				if part:FindFirstChild("TouchInterest") then
+					firetouchinterest(Card.Handle, part, 0);
+					firetouchinterest(Card.Handle, part, 1);
+				end;
+			end;
+		end;
+		return;
 	end,
 });
 teleport_tab:CreateLabel({
 	Text = "Teleports can fail if your ping is too high, if this occurs config retry count.";
 	Style = 2;
 });
-
 local teleport_locations: {[string]: CFrame} = {
 	["Tower"] =  CFrame.new(548, 557, 848);
 	["CI Base"] = CFrame.new(830, 500, 875);
@@ -225,10 +171,8 @@ local teleport_locations: {[string]: CFrame} = {
 	["Gate B outside"]  = CFrame.new(849, 527, 593);
 	["Gate B tower"]  = CFrame.new(871, 499, 461);
 };
-
 local config = teleport_tab:CreateSection("Config");
 local Try: number = 17;
-
 config:CreateSlider({Name = "Teleport retry count",
 	Range = {1, 50},
 	Increment = 2, 
@@ -238,58 +182,24 @@ config:CreateSlider({Name = "Teleport retry count",
 		return;
 	end;	
 });
-
 local players_section = teleport_tab:CreateSection("Players");
-local teleport_to_location; teleport_to_location = @native function(dummy_end_pos: CFrame)
-    local dummy_vent_pos: CFrame = CFrame.new(539.25, 34, -190)
-    local dummy_base_pos: Vector3 = Vector3.new(846, 463, 878)
-
-    local dummy_max_tries: number = 64
-
-    local dummy_character = Player.Character
-    local dummy_root = dummy_character.HumanoidRootPart
-
-    for dummy_index: number = 1, dummy_max_tries do
-	
-	    dummy_character:PivotTo(dummy_vent_pos)
-	    hrp.AssemblyLinearVelocity = Vector3.zero
-    	hrp.AssemblyAngularVelocity = Vector3.zero
-
-	    task.wait(0.04)
-
-	    if (dummy_root.Position - dummy_base_pos).Magnitude <= 1.5 then
-	    	dummy_root.Anchored = true
-    		dummy_root.AssemblyLinearVelocity = Vector3.zero
-    		dummy_root.AssemblyAngularVelocity = Vector3.zero
-
-	    	local dummy_attempts: number = 0
-	    	local dummy_connection: RBXScriptConnection = run_service.Heartbeat:Connect(function()
-    			dummy_attempts += 1
-    			dummy_character:PivotTo(dummy_end_pos)
-    			dummy_root.AssemblyLinearVelocity = Vector3.zero
-    			dummy_root.AssemblyAngularVelocity = Vector3.zero
-		end)
-
-		local dummy_start = tick()
-		while tick() - dummy_start < 1.5 and dummy_attempts < 40 do
-			if (dummy_root.Position - dummy_end_pos.Position).Magnitude <= 0.05 then
-				break
-			end
-			task.wait(0.01)
-		end
-		dummy_connection:Disconnect()
-
-		task.wait(0.06)
-		dummy_root.Anchored = false
-
-		if (dummy_root.Position - dummy_end_pos.Position).Magnitude <= 0.05 then
-			break
-		end
-	end
-
-	task.wait(0.06)
-end
-
+local teleport_to_location; teleport_to_location = @native function(Cframe: CFrame)
+	for i: number = 1, Try do
+		wait();
+		if not Player or not Player.Character or not Player.Character:FindFirstChild("Humanoid") then
+			continue;
+		end;
+		Player.Character:PivotTo(CFrame.new(538.700073, 34, -190.999969, 0, 1, 0, 0, 0, 1, 1, 0, 0));
+	end;
+	wait(0.2);
+	for i: number = 1, Try do
+		task.wait();
+		if not Player or not Player.Character or not Player.Character:FindFirstChild("Humanoid") then
+			continue;
+		end;
+		Player.Character:PivotTo(Cframe);
+	end;
+end;
 players_section:CreateDropdown({
 	Name = "Teleport to player";
 	Description  = nil;	
@@ -305,16 +215,12 @@ players_section:CreateDropdown({
 		end;
 	end,
 });
-
 local helpful_section = helpful_tab:CreateSection("Section 1");
 local Containnment = teleport_tab:CreateSection("SCP Cells");
-
 local Bays = teleport_tab:CreateSection("Bays");
 local misc_left = teleport_tab:CreateSection("Uncategorized");
-
 local misc_right = teleport_tab:CreateSection("Uncategorized");
 local Player = Players.LocalPlayer :: Player;
-
 for i: string, v: CFrame in teleport_locations do
 	local group_side;
 	if i:find("CC") then
@@ -334,7 +240,6 @@ for i: string, v: CFrame in teleport_locations do
 		end,
 	});
 end;
-
 local other_tab = Window:CreateTab({
 	Name = "MISC";
 	Icon = "folder";
@@ -343,13 +248,10 @@ local other_tab = Window:CreateTab({
 });
 local Moderation = moderation_tab:CreateSection("Moderation");
 local anti_cheat = moderation_tab:CreateSection("Anti cheat");
-
 local ddos_section = ddos_tab:CreateSection("Config");
 local main = ddos_tab:CreateSection("Methods");
-
 local other_section1 = other_tab:CreateSection("Section 1");
 local other_section2 = other_tab:CreateSection("Section  2");
-
 local char = Player.Character;
 local states = {
 	server_bypass = false;
@@ -362,9 +264,8 @@ local states = {
 	tesla_spam = false;
 	infinite_run = false;
 };
-
 ddos_section:CreateLabel({
-	Text = "Do not set the count too high, or you will be rate-limit!";
+	Text = "Do not set the count too high or spam too fast else face detection by UDMUX.";
 	Style = 3;
 });
 local toggle_run = @native function(): ()
@@ -375,7 +276,6 @@ local toggle_run = @native function(): ()
 	end;
 	return;
 end;
-
 local teleport_service: TeleportService = service.TeleportService;
 helpful_tab:CreateButton({
 	Name = "Teleport to testing place";
@@ -385,13 +285,85 @@ helpful_tab:CreateButton({
 		return;
 	end,
 });
-
 helpful_tab:CreateButton({
-	Name = "Respawn";
+	Name = "respawn";
 	Description = nil;
 	Callback = @native function(_: unknown): ()
 		return network:FireServer("switchTeamMenu", Player.Team);
 	end;
+});
+helpful_tab:CreateToggle({
+	Name = "Minimap spy (buggy for now)  ";
+	Description = "Shows everyone on the minimap regardless of team, colors changes based on team color.";
+	Callback = @native function(toggle: boolean): ()
+		if toggle then
+			local hook; hook = hookmetamethod(game, "__index", newcclosure(function(...)
+				if checkcaller() then  return hook(...); end;
+				local self, index = ...;
+				if self and typeof(self) == "Instance" and tostring(self) == "Foundation" and self.ClassName == "BoolValue" and index == "Value" then
+					return true;
+				end;
+				return hook(...);
+			end));
+			for _,v in getgc(false) do
+				if type(v) == "function" and islclosure(v) and debug.info(v, "n") == "UpdateMinimap" then
+					local up_values = debug.getupvalues(v);
+					local new_instance = up_values[4];
+					local hook; hook = hookfunction(new_instance, newlclosure(function(self: any, class: string, prop: {[string]: any})
+						if class == "ImageLabel" and rawget(prop, "ImageColor3") and rawget(prop, "AnchorPoint") and rawget(prop, "ZIndex") then
+							rawset(prop, "ImageColor3", Players[rawget(prop, "Name")].TeamColor.Color);
+						end;
+						return hook(self, class, prop);
+					end));
+				end;
+			end;
+			for _,v in Player.PlayerGui.HudGui["#map"].Players:GetChildren() do
+				if Players:FindFirstChild(tostring(v)) then
+					v.ImageColor3 = Players[tostring(v)].TeamColor.Color;
+				end;
+			end;
+		else
+			if isfunctionhooked(getrawmetatable(game).__index) then
+				restorefunction(getrawmetatable(game).__index);
+			end;
+			for _,v in getgc(false) do
+				if type(v) == "function" and islclosure(v) and debug.info(v, "n") == "UpdateMinimap" then
+					local up_values = debug.getupvalues(v);
+					local new_instance = up_values[4];
+					if isfunctionhooked(new_instance) then restorefunction(new_instance); end;
+				end;
+			end;
+			for _,v in Player.PlayerGui.HudGui["#map"].Players:GetChildren() do
+				if v:IsA("ImageLabel") and Players:FindFirstChild(tostring(v)) then
+					v.ImageColor3 = tostring(v) == tostring(Player) and Color3.fromRGB(85, 255, 0) or Color3.fromRGB(0, 0, 255);
+				end;
+			end;
+		end;
+		return;
+	end,	
+});
+helpful_section:CreateToggle({
+	Name = "Full bright";
+	Callback = @native function(enabled: boolean): ()
+		if enabled then
+			local hook; hook = hookmetamethod(game, "__newindex", newcclosure(function(...)
+				local self, index, value = ...;
+				if not checkcaller() and self and typeof(self) == "Instance" and self == game:GetService("Lighting") then
+					return;
+				end;
+				hook(...);
+			end));
+			Luna:Notification({
+				Title = "Done";
+				Icon  = "check_box";
+				ImageSource = "Material";
+				Content = "Now run IY full bright"
+			});
+		else
+			restorefunction(getrawmetatable(game).__newindex);
+		end;
+		return;
+	end,	
 });
 helpful_tab:CreateButton({
 	Name = "Trigger autofarm";
@@ -401,7 +373,7 @@ helpful_tab:CreateButton({
 			if type(v) == "function" and debug.info(v, "n") == "_createBlood" then
 				local hook; hook = hookfunction(v, newlclosure(function(...)
 					for i = 1, send_count do
-						task.wait();
+						wait();
 						hook(...);
 					end;
 					return hook(...)
@@ -426,7 +398,6 @@ helpful_tab:CreateDropdown({
 		return;
 	end,
 });
-
 helpful_tab:CreateToggle({
 	Name = "Disable sprint";
 	Description = "Also known as infinite run";
@@ -450,13 +421,12 @@ helpful_tab:CreateButton({
 	Callback = @native function(toggle: boolean): ()
 		for _,v in workspace.Ignore:GetChildren() do
 			if tostring(v) == "Block" or tostring(v) == "CI" then
-				v:Destroy();
+				v.Transparency = 1;
 			end;
 		end;
 		return;
 	end,
 });
-
 helpful_tab:CreateToggle({
 	Name = "Disable blinking";
 	Description = "Also known as infinite blinking";
@@ -489,7 +459,6 @@ local Slider = ddos_section:CreateSlider({
 		return;
 	end;
 }, "Slider");
-
 main:CreateButton({
 	Name = "Load charecter spam";	
 	Description = nil;
@@ -503,7 +472,6 @@ main:CreateButton({
 	end,
 });
 local weapon_section_1 = weapon_tab:CreateSection("Firerate");
-
 weapon_section_1:CreateToggle({
 	Name = "Make guns automatic";
 	Description = "Makes guns automatic property to true";
@@ -551,7 +519,6 @@ local toggle_infinite_ammo; toggle_infinite_ammo = @native function(enabled: boo
 		end;
 	end;
 end;
-
 weapon_section_1:CreateToggle({
 	Name = "Infinite Ammo";
 	Description = nil;
@@ -580,7 +547,6 @@ weapon_section_1:CreateToggle({
 		return;
 	end,
 });
-
 door_section:CreateToggle({
 	Name = "Spam teslas";
 	Description = "Spam activates teslas";
@@ -613,7 +579,7 @@ local toggle_insta_kill; toggle_insta_kill = @native function(enabled: boolean)
 		end;
 		return hook(...);
 	end));
-	repeat task.wait() until flux_encode;
+	repeat wait() until flux_encode;
 	local hook; hook = hookmetamethod(game, "__namecall", newcclosure(function(...)
 		local Args: {any} = {...};
 		local Self = Args[1];
@@ -630,7 +596,6 @@ local toggle_insta_kill; toggle_insta_kill = @native function(enabled: boolean)
 		return hook(...);
 	end));
 end;
-
 local weapon_section_2 = weapon_tab:CreateSection("Spread");
 weapon_section_2:CreateToggle({
 	Name = "No Spread";
@@ -650,13 +615,17 @@ weapon_section_2:CreateToggle({
 			end;
 		end;
 	end,
-});
 
+});
 local weapon_section_2 = weapon_tab:CreateSection("Instant kill");
 weapon_section_2:CreateLabel({
-	Text = "Do not set the count to high, or you will be rate-limited!";
+	Text = "Do not set the count too high or spam too fast else face detection by UDMUX.";
 	Style = 3;
 })
+weapon_section_2:CreateLabel({
+	Text = "This is also really harsh on the ears for other players.";
+	Style = 2;
+});
 local Slider = weapon_section_2:CreateSlider({
 	Name = "Packet send count",
 	Range = {1, 300},
@@ -667,7 +636,6 @@ local Slider = weapon_section_2:CreateSlider({
 		return;
 	end;
 }, "Slider");
-
 weapon_section_2:CreateToggle({
 	Name = "Toggle Instant kill";
 	Description = "One shot. One kill :cold_face_emoji:";
@@ -710,13 +678,11 @@ local server_bypass = @native function(value: boolean)
 	end;
 	return;
 end;
-
 local scp_group: number = 3895837;
 Moderation:CreateLabel({
 	Text = "Moderator scan will only notify you once. Enable notifer for live updates.";
 	Style = 3;
 })
-
 other_section2:CreateLabel({
 	Text = "ESP does NOT have a feature to be toggable.";
 	Style = 3;
@@ -728,7 +694,6 @@ other_section2:CreateButton({
 		return loadstring(game:HttpGet("https://raw.githubusercontent.com/sleepyBIOS/scripts/refs/heads/main/site19esp.luau"))(); 
 	end,
 });
-
 other_section2:CreateButton({
 	Name = "Load IY";
 	Description = nil;
@@ -743,6 +708,35 @@ other_section2:CreateButton({
 		return loadstring(game:HttpGet("https://raw.githubusercontent.com/sleepyBIOS/scripts/refs/heads/main/site19chatlogs.lua"))();
 	end,
 });
+other_section1:CreateToggle({
+	Name = "Always mouse enabled";
+	Description = "Prevents the mouse icon from becoming invisible.";
+	CurrentValue = false;
+	Callback = @native function(value: boolean): ()
+		if value then
+			local hook; hook = hookmetamethod(game, "__newindex", newcclosure(function(...)
+				if checkcaller() then hook(...); return; end;
+				local self, index, value = ...;
+				if typeof(self) == "Instance" and self ==  Player:GetMouse() then
+					if typeof(index) == "string" and string.lower(index) == "icon" and typeof(value) == "string" and string.len(value) <= 0 then
+						return;
+					end;
+				elseif self == game:GetService("UserInputService") then
+					if typeof(index) == "string" and string.lower(index) == "mouseiconenabled" and type(value) == "boolean" and not value then
+						return;
+					end;
+				end;
+				hook(...);
+			end));
+			game:GetService("UserInputService").MouseIconEnabled = true;
+		else
+			if isfunctionhooked(getrawmetatable(game).__newindex) then
+				restorefunction(getrawmetatable(game).__newindex);
+			end;
+		end;
+		return;
+	end,
+});
 Moderation:CreateButton({
 	Name = "Randomize apperance";
 	Description = nil;
@@ -753,7 +747,6 @@ Moderation:CreateButton({
 		return;
 	end,	
 });
-
 Moderation:CreateButton({
 	Name = "Moderator scan.",
 	Description = "Scans for moderators in the game.";
@@ -785,7 +778,6 @@ Moderation:CreateButton({
 		return;
 	end;
 });
-
 Moderation:CreateToggle({
 	Name = "Kick when moderator arrives";
 	Description= nil;
@@ -804,7 +796,6 @@ Moderation:CreateToggle({
 		return;
 	end,
 });
-
 Moderation:CreateToggle({
 	Name = "Avoid";
 	Description = "Changes your team and apperance upon mod arrival.";
@@ -852,7 +843,6 @@ anti_cheat:CreateToggle({
 		return;
 	end,
 });
-
 Players.PlayerAdded:Connect(@native function(player: Player) 
 	if Player and Player:GetRankInGroup(scp_group) > 8  then
 		if states.avoid then
@@ -867,14 +857,12 @@ Players.PlayerAdded:Connect(@native function(player: Player)
 	end;
 	return;
 end);
-
 local touchies: {[number]: TouchTransmitter} = {};
 for _,v in workspace:GetDescendants() do
 	if tostring(v) == "TouchInterest" and tostring(v.Parent) == "Caution" then
 		table.insert(touchies, v);    
 	end;
 end;
-
 Player.CharacterAdded:Connect(function(charec: Model): ()
 	char = charec;
 	server_bypass(states.server_bypass)
@@ -884,10 +872,10 @@ end);
 run_service.PreRender:Connect(@native function(deltaTimeRender: number) 
 	if states.tesla_spam and Player and Player.Character:FindFirstChild("HumanoidRootPart") then
 		for _,v: TouchTransmitter in touchies do
-			firetouchinterest(Player.Character.HumanoidRootPart, v.Parent, true);
+			firetouchinterest(Player.Character.HumanoidRootPart, v.Parent, 0);
+			wait();
+			firetouchinterest(Player.Character.HumanoidRootPart, v.Parent, 1);
 		end;
 	end;
 	return;
 end);
-
-return;
