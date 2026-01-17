@@ -172,36 +172,55 @@ local teleport_locations: {[string]: CFrame} = {
 	["Gate B tower"]  = CFrame.new(871, 499, 461);
 };
 
-local config = teleport_tab:CreateSection("Config");
-local Try: number = 17;
-
-config:CreateSlider({Name = "Teleport retry count",
-	Range = {1, 50},
-	Increment = 2, 
-	CurrentValue = 17;
-	Callback = @native function(value: number): ()
-		Try = value;
-		return;
-	end;	
-});
-
 local players_section = teleport_tab:CreateSection("Players");
-local teleport_to_location; teleport_to_location = @native function(Cframe: CFrame)
-	for i: number = 1, Try do
-		task.wait();
-		if not Player or not Player.Character or not Player.Character:FindFirstChild("Humanoid") then
-			continue;
-		end;
-		Player.Character:PivotTo(CFrame.new(538.700073, 34, -190.999969, 0, 1, 0, 0, 0, 1, 1, 0, 0));
-	end;
-	task.wait(0.2);
-	for i: number = 1, Try do
-		task.wait();
-		if not Player or not Player.Character or not Player.Character:FindFirstChild("Humanoid") then
-			continue;
-		end;
-		Player.Character:PivotTo(Cframe);
-	end;
+local teleport_to_location; teleport_to_location = @native function(dummy_end_pos: CFrame)
+    local dummy_vent_pos: CFrame = CFrame.new(539.25, 34, -190)
+    local dummy_base_pos: Vector3 = Vector3.new(846, 463, 878)¿
+
+    local dummy_max_tries: number = 64
+
+    local dummy_character = Player.Character
+    local dummy_root = dummy_character.HumanoidRootPart
+
+    for dummy_index: number = 1, dummy_max_tries do
+    	dummy_character:PivotTo(dummy_vent_pos)
+	    dummy_root.AssemblyLinearVelocity = Vector3.zero
+	    dummy_root.AssemblyAngularVelocity = Vector3.zero
+
+    	task.wait(0.04)
+
+    	if (dummy_root.Position - dummy_base_pos).Magnitude <= 1.5 then
+	    	dummy_root.Anchored = true
+	    	dummy_root.AssemblyLinearVelocity = Vector3.zero
+		    dummy_root.AssemblyAngularVelocity = Vector3.zero
+
+	    	local dummy_attempts: number = 0
+	    	local dummy_connection: RBXScriptConnection = run_service.Heartbeat:Connect(function()
+	    		dummy_attempts += 1
+	    		dummy_character:PivotTo(dummy_end_pos)
+	    		dummy_root.AssemblyLinearVelocity = Vector3.zero
+	    		dummy_root.AssemblyAngularVelocity = Vector3.zero
+	    	end)
+
+	    	local dummy_start = tick()
+	    	while tick() - dummy_start < 1.5 and dummy_attempts < 40 do
+	    		if (dummy_root.Position - dummy_end_pos.Position).Magnitude <= 0.05 then
+	    			break
+    			end
+    			task.wait(0.01)
+	    	end
+	    	dummy_connection:Disconnect()
+
+	    	task.wait(0.06)
+	    	dummy_root.Anchored = false
+
+	    	if (dummy_root.Position - dummy_end_pos.Position).Magnitude <= 0.05 then
+	    		break
+	    	end
+    	end
+
+    	task.wait(0.06)
+    end
 end;
 
 players_section:CreateDropdown({
