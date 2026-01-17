@@ -2,7 +2,7 @@
 --!native
 --!nolint
 
-if not game.GameId ~= 1440936008 then
+if game.GameId ~= 1440936008 then
     return -- I have the script at autoexec folder :p
 end
 
