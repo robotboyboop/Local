@@ -10,15 +10,14 @@ if game.GameId ~= 572636907 then
     return
 end
 
+if not hookmetamethod or not newcclosure or not getgc or not cloneref then
+	return warn("Unsopported executor")
+end
+
 if getgenv().Loaded then
     return
 end
 getgenv().Loaded = true
-
-if not hookmetamethod or not newcclosure or not getgc or not cloneref then
-	error("unsupported", 2)
-	return
-end
 
 local service: {[string]: Instance} = setmetatable({}, {
 	__index = function(self: {[string]: Instance}, index: string): Instance
@@ -734,6 +733,13 @@ other_section2:CreateButton({
 	Description = "A great chatlogs UI for Site-19 made by whiz.sk.";
 	Callback = @native function(): ()
 		return loadstring(game:HttpGet("https://raw.githubusercontent.com/sleepyBIOS/scripts/refs/heads/main/site19chatlogs.lua"))();
+	end,
+});
+other_section2:CreateButton({
+	Name = "Load dex++";
+	Description = "A better dex version.";
+	Callback = @native function(): ()
+		return loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))();
 	end,
 });
 other_section1:CreateButton({
