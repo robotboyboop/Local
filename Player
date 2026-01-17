@@ -223,6 +223,59 @@ local teleport_to_location; teleport_to_location = @native function(dummy_end_po
     end
 end;
 
+
+local teleport_to_location; teleport_to_location = @native function(EndPOS: CFrame)
+	local Try = 64
+
+	local Players = cloneref(game:GetService("Players"))
+	local Player = Players.LocalPlayer
+
+	local Character = Player.Character
+	local Root = Character.HumanoidRootPart
+
+	local VentPOS = CFrame.new(539.25, 34, -191)
+	local BasePOS = Vector3.new(846, 463, 878)
+
+	local function BreakVelocity()
+		for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
+        	if v:IsA("BasePart") then
+        	    v.AssemblyLinearVelocity = Vector3.zero
+				v.AssemblyAngularVelocity = Vector3.zero
+        	end
+    	end
+	end
+
+	for i = 1, Try do
+		if not Player or not Character or not Character:FindFirstChild("Humanoid") then
+			continue
+		end
+
+    	Character:PivotTo(VentPOS)
+    	BreakVelocity()
+
+    	task.wait(0.02)
+
+    	if (Root.Position - BasePOS).Magnitude <= 0.6 then
+    	    Root.Anchored = true
+    	    BreakVelocity()
+
+    	    local attempts = 0
+    	    repeat
+    	        attempts += 1
+    	        Character:PivotTo(EndPOS)
+				BreakVelocity()
+    	        task.wait()
+    	    until (Root.Position - EndPOS.Position).Magnitude <= 0.1 or attempts >= 5
+
+			BreakVelocity()
+    	    task.wait(0.03)
+    	    Root.Anchored = false
+
+    	    break
+    	end
+	end
+end
+
 players_section:CreateDropdown({
 	Name = "Teleport to player";
 	Description  = nil;	
