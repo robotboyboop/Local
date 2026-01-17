@@ -10,7 +10,8 @@ if not hookmetamethod or not newcclosure or not getgc or not cloneref or not isf
 end;
 
 if getgenv().Loaded then return; end;
-getgenv().Loaded = true;
+pcall(function() getgenv().Loaded = true; end);
+if not game:IsLoaded() then game.Loaded:Wait(); end;
 
 local service: {[string]: Instance} = setmetatable({}, {
 	__index = function(self: {[string]: Instance}, index: string): Instance
