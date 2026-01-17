@@ -734,6 +734,7 @@ other_section1:CreateButton({
 	Description = nil;
 	Callback = @native function(): ()
 		return Luna:Destroy();
+	end;
 });
 Moderation:CreateButton({
 	Name = "Randomize apperance";
