@@ -2,17 +2,12 @@
 --!native
 --!nolint
 
-if game.GameId ~= 1440936008 then
-    return -- I have the script at autoexec folder :p
-end
-
-if not hookmetamethod or not newcclosure or not getgc or not cloneref or not isfunctionhooked then
-	return error("unsupported", 2);
-end;
-
-if getgenv().Loaded then return; end;
-pcall(function() getgenv().Loaded = true; end);
-if not game:IsLoaded() then game.Loaded:Wait(); end;
+while game.GameId == 0 do task.wait() end
+if game.GameId ~= 1440936008 then return end
+if getgenv().Loaded then return end
+getgenv().Loaded = true
+if not (hookmetamethod and newcclosure and getgc and cloneref and isfunctionhooked) then return error("unsupported executor", 2) end
+if not game:IsLoaded() then game.Loaded:Wait()end
 
 local service: {[string]: Instance} = setmetatable({}, {
 	__index = function(self: {[string]: Instance}, index: string): Instance
