@@ -733,7 +733,7 @@ other_section1:CreateButton({
 	Name = "Destroy Luna";
 	Description = nil;
 	Callback = @native function(): ()
-		return Luna:Destroy(); getgenv().Loaded = false;
+		return Luna:Destroy();
 });
 Moderation:CreateButton({
 	Name = "Randomize apperance";
