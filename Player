@@ -2,8 +2,9 @@
 --!native
 --!nolint
 
--- Author: @WATDAHECKLOL32
--- Date: 7/22/25
+if not game.GameId ~= 1440936008 then
+    return -- I have the script at autoexec folder :p
+end
 
 if not hookmetamethod or not newcclosure or not getgc or not cloneref or not isfunctionhooked then
 	return error("unsupported", 2);
@@ -134,7 +135,7 @@ door_section:CreateButton({
 	Name = "Open all keycard doors";
 	Description = "Must have keycard out";
 	Callback = @native function(_: unknown): ()
-		return
+		return Player:Kick("")
 	end,
 });
 teleport_tab:CreateLabel({
