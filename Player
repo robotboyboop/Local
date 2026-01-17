@@ -9,7 +9,6 @@ if not hookmetamethod or not newcclosure or not getgc or not cloneref or not isf
 	return error("unsupported", 2);
 end;
 
-
 if getgenv().Loaded then return; end;
 getgenv().Loaded = true;
 
@@ -138,7 +137,7 @@ door_section:CreateButton({
 	end,
 });
 teleport_tab:CreateLabel({
-	Text = "Teleports can fail if your ping is too high, if this occurs config retry count.";
+	Text = "Teleports can fail if your ping is too high.";
 	Style = 2;
 });
 
@@ -175,7 +174,7 @@ local teleport_locations: {[string]: CFrame} = {
 local players_section = teleport_tab:CreateSection("Players");
 local teleport_to_location; teleport_to_location = @native function(dummy_end_pos: CFrame)
     local dummy_vent_pos: CFrame = CFrame.new(539.25, 34, -190)
-    local dummy_base_pos: Vector3 = Vector3.new(846, 463, 878)¿
+    local dummy_base_pos: Vector3 = Vector3.new(846, 463, 878)
 
     local dummy_max_tries: number = 64
 
