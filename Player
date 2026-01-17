@@ -2,7 +2,7 @@
 --!native
 --!nolint
 
-while game.GameId == 0 do task.wait() end
+task.wait(7)
 if game.GameId ~= 1440936008 then return end
 if getgenv().Loaded then return end
 getgenv().Loaded = true
