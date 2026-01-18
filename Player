@@ -544,7 +544,7 @@ local toggle_infinite_ammo; toggle_infinite_ammo = @native function(enabled: boo
 	end;
 end;
 weapon_section_1:CreateButton({
-	Name = "Load charecter spam";	
+	Name = "Remove muzzle";	
 	Description = nil;
 	Callback = @native function(): ()
 		for _, v in (Character:FindFirstChildWhichIsA("Tool")) do
