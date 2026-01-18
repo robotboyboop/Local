@@ -547,10 +547,10 @@ weapon_section_1:CreateButton({
     Name = "Remove muzzle",
     Description = "You need to have a gun equipped.", -- Later imma make this shit to search more than just one muzzle.
     Callback = function()
-        for _, v in (Character:FindFirstChild("Muzzle", true)) do
-			if v then
-				v:Destroy()
-			end
+        local CHARACTER = Player.Character
+		local muzzle = CHARACTER:FindFirstChild("Muzzle", true)
+		if muzzle then
+			muzzle:Destroy()
 		end
     end
 })
