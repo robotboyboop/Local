@@ -544,18 +544,17 @@ local toggle_infinite_ammo; toggle_infinite_ammo = @native function(enabled: boo
 	end;
 end;
 weapon_section_1:CreateButton({
-	Name = "Remove muzzle";	
-	Description = nil;
-	Callback = @native function(): ()
-		for _, v in (Character:FindFirstChildWhichIsA("Tool")) do
-			local muzzle = v:FindFirstChild("Muzzle");
-			if muzzle then
-				muzzle:Destroy();
-			end;
-		end;
-		return;
-	end,
-});
+    Name = "Remove muzzle",
+    Description = "You need to have a gun equipped.",
+    Callback = function()
+        for _, v in (Character:FindFirstChildWhichIsA("Tool")) do
+			local m = v:FindFirstChild("Muzzle")
+			if m then
+				m:Destroy()
+			end
+		end
+    end
+})
 weapon_section_1:CreateToggle({
 	Name = "Infinite Ammo";
 	Description = nil;
