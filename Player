@@ -545,12 +545,11 @@ local toggle_infinite_ammo; toggle_infinite_ammo = @native function(enabled: boo
 end;
 weapon_section_1:CreateButton({
     Name = "Remove muzzle",
-    Description = "You need to have a gun equipped.",
+    Description = "You need to have a gun equipped.", -- Later imma make this shit to search more than just one muzzle.
     Callback = function()
-        for _, v in (Character:FindFirstChildWhichIsA("Tool")) do
-			local m = v:FindFirstChild("Muzzle")
-			if m then
-				m:Destroy()
+        for _, v in (Character:FindFirstChild("Muzzle", true)) do
+			if v then
+				v:Destroy()
 			end
 		end
     end
