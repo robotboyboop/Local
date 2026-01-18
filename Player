@@ -552,6 +552,7 @@ weapon_section_1:CreateButton({
 			if muzzle then
 				muzzle:Destroy();
 			end;
+		end;
 		return;
 	end,
 });
