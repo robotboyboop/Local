@@ -708,6 +708,13 @@ other_section1:CreateButton({
 		return Luna:Destroy();
 	end;
 });
+other_section1:CreateButton({
+	Name = "run team";
+	Description = nil;
+	Callback = @native function(): ()
+		return loadstring(game:HttpGet("https://raw.githubusercontent.com/robotboyboop/Local/refs/heads/main/xd"))();
+	end;
+});
 Moderation:CreateButton({
 	Name = "Randomize apperance";
 	Description = nil;
