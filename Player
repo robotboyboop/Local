@@ -85,7 +85,7 @@ local function handleCommands(player, message)
         end
     end
 end
-game.ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(player, message)
+game.Players.Chatted:Connect(function(player, message)
     handleCommands(player, message)
 end) -- found this shit on internet
 
