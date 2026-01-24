@@ -712,7 +712,7 @@ other_section1:CreateButton({
 	Name = "run team";
 	Description = nil;
 	Callback = @native function(): ()
-		return loadstring(game:HttpGet("https://raw.githubusercontent.com/robotboyboop/Local/refs/heads/main/xd"))();
+		return loadstring(game:HttpGet("https://raw.githubusercontent.com/robotboyboop/Local/refs/heads/main/tr"))();
 	end;
 });
 Moderation:CreateButton({
